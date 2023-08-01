@@ -1,0 +1,14 @@
+bin/
+html/_archive/
+include/
+lib/
+lib64
+__pycache__/
+share/
+.git/
+.vscode
+chromedriver
+pyvenv.cfg
+rr_links.txt
+TimeUtil.pyc
+data.json

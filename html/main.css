@@ -1,0 +1,136 @@
+html {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 1.5rem;
+    color: #ffffff;
+    background-color: #2e2f35;
+}
+
+h2 {
+    font-weight: 900;
+    font-size: 1.4rem;
+    margin: 0 0 0 0.25rem;
+    padding: 1.0rem 1.5rem;
+    background-color: #9f75af;
+    border-radius: 1rem 1rem 0 0;
+}
+
+h3, h4 {
+    margin: 0 0 1rem 0; 
+}
+
+table {
+    visibility: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+button {
+    font-weight: 900;
+    margin-right: 0.5rem;
+    padding: 0.5rem 1.0rem;
+    color: #ffffff;
+    background-color: #300a3f;
+    border: 1px solid #ffffff;
+    border-radius: 0.5rem;
+}
+
+.container { 
+    width: 1000px;
+    margin:0 auto;
+}
+
+.tabs {
+    display: flex;
+}
+
+.tabs h2.active {
+    background: #591375;
+}
+
+.posts__content { 
+    display: none;
+    padding: 1.0rem 0.5rem;
+    background-color: #3d3e46;
+    border-radius: 5px;
+}
+
+
+.post {
+    margin: 0 0 2rem 0;
+    padding: 1rem 3rem 1.5rem 3rem;
+    background-color: rgb(31, 41, 55);
+    border: 1px solid #ffffff;
+    border-radius: 10px;
+}
+
+.post.viewed {
+    background-color: rgb(37, 21, 30);
+}
+
+.post__headline {
+    font-size: 1.5rem;
+    line-height: 2.3rem;
+}
+
+.post__headline--link {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.post__headline--link a {
+    pointer-events: none;
+}
+
+.post__headline--link a.show {
+    pointer-events: auto;
+}
+
+.post__info span {
+    margin-right: 2rem;
+}
+
+.post__description, table {
+    display: none;
+}
+
+.post__buttonbar {
+    margin-top: 1.5rem;
+}
+
+.post__buttonbar--secondary {
+    display: none;
+    margin-top: 1rem;
+}
+
+.close {
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 10px;
+    width: 15px;
+    max-height: 15px;
+    text-align: center;
+    padding: 0.2rem;
+    border: 1px solid #ffffff;
+    border-radius: 50px;
+}
+
+.close-show {
+    display: flex;
+}
+
+.close:hover {
+    color: rgb(31, 41, 55);
+    background: #eeeeee;
+}
+
+.show {
+    display: block;
+}
