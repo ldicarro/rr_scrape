@@ -4,7 +4,7 @@ from datetime import datetime
 import json
 import shutil
 import subprocess
-import sys
+import shutil
 
 from TimeUtil import TimeUtil
 from TextUtil import TextUtil
@@ -23,6 +23,8 @@ def init():
       data = json.loads(document)
       processDocument(data)
 
+# create html document while filtering and processing
+# the json passed in.
 def processDocument(data):
   html = ''
   tabs = '<div class=\"tabs\">'
@@ -94,8 +96,12 @@ def processDocument(data):
   tabs += "</div>"
   createHTML(tabs + html)
   
+  # push html to server
   with open('./sync.sh') as f:
     subprocess.call(f.read().split(" "))
+
+  # clearing the json file for next run
+  shutil.copyfile('data.template.json','data.json')
 
 def createHTML(html):
   with open('html/index.html') as f:
