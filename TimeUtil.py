@@ -3,7 +3,18 @@ from datetime import datetime, timedelta
 from pytz import timezone
 
 class TimeUtil():
+  """
+  calculate the time difference between [time] and now.
+  converts formatted string to time object
 
+  Parameters
+  ----------
+  time: string
+
+  Returns
+  -------
+  number: hours difference
+  """
   def getHourDiff(self, time):
     datetime_dict = {
         "year": time[0:4],
@@ -13,8 +24,29 @@ class TimeUtil():
         "minute": time[14:16],
     }
 
-    datetime_str = datetime_dict['month'] + '/' + datetime_dict['day'] + '/' + datetime_dict['year'][2:4] + ' ' + datetime_dict['hour'] + ':' + datetime_dict['minute'] + ":00"
-    datetime_object = datetime.strptime(datetime_str, '%m/%d/%y %H:%M:%S')
+    datetime_object = self.convertStringToTimeObjects(datetime_dict)
     datetime_offset = datetime_object - timedelta(hours=3)
 
     return math.ceil((datetime.now() - datetime_offset).total_seconds() / 3600)
+  
+  """
+  converts formatted string to time object
+
+  Parameters
+  ----------
+  dictionary: data and time if this format
+  {
+        "year",
+        "month",
+        "day",
+        "hour",
+        "minute",
+    }
+
+  Returns
+  -------
+  object: datetime object
+  """
+  def convertStringToTimeObjects(self, datetimeDict):
+    datetime_str = datetimeDict['month'] + '/' + datetimeDict['day'] + '/' + datetimeDict['year'][2:4] + ' ' + datetimeDict['hour'] + ':' + datetimeDict['minute'] + ":00"
+    return datetime.strptime(datetime_str, '%m/%d/%y %H:%M:%S')

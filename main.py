@@ -17,14 +17,35 @@ sectionTitles = {
   "technical_product_manager": "Technical Product Manager",
 }
 
-def init():
+"""
+read json from data file
+
+Parameters
+----------
+none
+
+Returns
+-------
+object: json
+"""
+def getJsonData():
   with open("./data.json") as f:
       document = f.read()
-      data = json.loads(document)
-      processDocument(data)
+      return json.loads(document)
 
-# create html document while filtering and processing
-# the json passed in.
+
+"""
+create html string while filtering 
+and processing the json passed in.
+
+Parameters
+----------
+data: object (json)
+
+Returns
+-------
+string: html
+"""
 def processDocument(data):
   html = ''
   tabs = '<div class=\"tabs\">'
@@ -94,16 +115,21 @@ def processDocument(data):
       html += "<div class=\"post\" data-visible=\"false\"><h3>No posts available.</h3></div>"
     html += "</div>"
   tabs += "</div>"
-  createHTML(tabs + html)
-  
-  # push html to server
-  with open('./sync.sh') as f:
-    subprocess.call(f.read().split(" "))
 
-  # clearing the json file for next run
-  shutil.copyfile('data.template.json','data.json')
+  return tabs + html
 
-def createHTML(html):
+"""
+create html document and write to file.
+
+Parameters
+----------
+data: string (html)
+
+Returns
+-------
+nothing
+"""
+def createHTMLDocument(html):
   with open('html/index.html') as f:
     first_line = f.readline().strip('<!-- ').strip(' -->\n')
     shutil.copy('html/index.html',"html/{}index_.html".format(first_line))
@@ -122,4 +148,13 @@ def createHTML(html):
 
 
 if __name__ == "__main__":
-  init()
+  data = getJsonData()
+  htmlString = processDocument(data)
+  createHTMLDocument(htmlString)
+  
+  # push html to server
+  with open('./sync.sh') as f:
+    subprocess.call(f.read().split(" "))
+
+  # clearing the json file for next run
+  shutil.copyfile('data.template.json','data.json')
