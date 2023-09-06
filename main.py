@@ -15,6 +15,7 @@ sectionTitles = {
   "product_manager": "Product Manager",
   "software_engineer": "Software Engineer",
   "technical_product_manager": "Technical Product Manager",
+  "front_end_engineer": "Frontend Engineer",
 }
 
 """
