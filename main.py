@@ -10,14 +10,6 @@ from TimeUtil import TimeUtil
 from TextUtil import TextUtil
 
 
-sectionTitles = {
-  "engineering_manager": "Engineering Manager",
-  "product_manager": "Product Manager",
-  "software_engineer": "Software Engineer",
-  "technical_product_manager": "Technical Product Manager",
-  "front_end_engineer": "Frontend Engineer",
-}
-
 """
 read json from data file
 
@@ -52,7 +44,7 @@ def processDocument(data):
   tabs = '<div class=\"tabs\">'
 
   for key,title in data.items():
-    tabs += ('<h2 class=\" {} \">{}</h2>\n'.format(key, sectionTitles[key]))
+    tabs += ('<h2 class=\" {} \">{}</h2>\n'.format(key, key.replace('_',' ').title()))
     html += ('<div class=\"posts__content posts__content--{}\">'.format(key))
     count = 0
     for post in title:
