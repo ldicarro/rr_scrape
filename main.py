@@ -163,11 +163,10 @@ if __name__ == "__main__":
   htmlString = processDocument(data)
   createHTMLDocument(htmlString)
   
-  '''
+  
   # push html to server
   with open('./sync.sh') as f:
     subprocess.call(f.read().split(" "))
 
   # clearing the json file for next run
   shutil.copyfile('data.template.json','data.json')
-  '''
