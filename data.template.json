@@ -1,7 +1,22 @@
 {
+    "backend_engineer":
+    [
+
+    ],
+    
     "engineering_manager":
     [
  
+    ],
+
+    "frontend_engineer":
+    [
+
+    ],
+
+    "full_stack_engineer":
+    [
+
     ],
 
     "product_manager":
@@ -9,7 +24,17 @@
 
     ],
 
+    "production_engineer":
+    [
+
+    ],
+
     "software_engineer":
+    [
+
+    ],
+
+    "solutions_engineer":
     [
 
     ],

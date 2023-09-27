@@ -6,25 +6,27 @@ import shutil
 import subprocess
 import shutil
 
+import dupes
+import files
+
 from TimeUtil import TimeUtil
 from TextUtil import TextUtil
 
 
-"""
-read json from data file
+def getJobIDs(data):
+  ids = {}
 
-Parameters
-----------
-none
+  # loop through top level
+  for key,item in data.items():
+    # create list for each item at top level
+    ids[key] = []
 
-Returns
--------
-object: json
-"""
-def getJsonData():
-  with open("./data.json") as f:
-      document = f.read()
-      return json.loads(document)
+    # loop through each job in the current item
+    for job in item:
+      #append the id to the list
+      ids[key].append(job['id'])
+
+  return ids
 
 
 """
@@ -40,6 +42,8 @@ Returns
 string: html
 """
 def processDocument(data):
+  global ids, companies
+
   html = ''
   tabs = '<div class=\"tabs\">'
 
@@ -65,6 +69,11 @@ def processDocument(data):
           continue
         
         count += 1
+
+        jobDupes = dupes.findDupes(ids, post['id'], key)
+        companyDupes = dupes.findCompanyDupes(companies, post['company']['name'])
+
+
         html += f"""
         <div class="post" data-visible="false">
           <div class="post__headline">
@@ -79,6 +88,10 @@ def processDocument(data):
           <div class="post__info">
             <span>{timediff} hours</span>
             <span>{minSalary}{maxSalary}</span>
+          </div>
+          <div class="post__dupes">
+            <div class="dupes">{jobDupes}</div>
+            <div class="dupes">{companyDupes}</div>
           </div>
           <div class="post__description">
             <p>{TextUtil().formatRawText(post['roleDescription'])}</p>
@@ -141,13 +154,20 @@ def createHTMLDocument(html):
 
 
 if __name__ == "__main__":
-  data = getJsonData()
+  global ids, companies
+
+  data = files.getJsonData()
+  ids = getJobIDs(data)
+  companies = files.getCompaniesData()
+
   htmlString = processDocument(data)
   createHTMLDocument(htmlString)
   
+  '''
   # push html to server
   with open('./sync.sh') as f:
     subprocess.call(f.read().split(" "))
 
   # clearing the json file for next run
   shutil.copyfile('data.template.json','data.json')
+  '''

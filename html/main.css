@@ -8,7 +8,8 @@ html {
 
 h2 {
     font-weight: 900;
-    font-size: 1.4rem;
+    font-size: 0.7rem;
+    line-height: 0.9rem;
     margin: 0 0 0 0.25rem;
     padding: 1.0rem 1.5rem;
     background-color: #9f75af;
@@ -92,6 +93,20 @@ button {
 
 .post__info span {
     margin-right: 2rem;
+}
+
+.post__dupes {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    font-size: 1.0rem;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #797979;
+}
+
+.post__dupes div:last-child {
+    margin-left: 1.0rem;
 }
 
 .post__description, table {
