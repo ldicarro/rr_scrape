@@ -21,8 +21,8 @@ def findCompanyDupes(companies, companyName):
   s = ''
 
   for company in companies:
-    if companyName == company['Company']:
-      s += 'You have applied to this company before. (' + company['Count'] + ')'
+    if companyName == company['company']:
+      s += 'You have applied to this company before. (' + company['count'] + ')'
       break
   
   return s

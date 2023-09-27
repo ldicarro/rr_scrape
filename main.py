@@ -75,7 +75,7 @@ def processDocument(data):
 
 
         html += f"""
-        <div class="post" data-visible="false">
+        <div class="post" data-visible="false" data-id="{post['id']}">
           <div class="post__headline">
             <div class="post__headline--link">
               <a href="{post['url']}" target="_blank">
