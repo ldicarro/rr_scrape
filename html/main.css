@@ -72,6 +72,10 @@ button {
     background-color: rgb(37, 21, 30);
 }
 
+.post.applied {
+    background-color: rgb(59, 33, 33);
+}
+
 .post__headline {
     font-size: 1.5rem;
     line-height: 2.3rem;

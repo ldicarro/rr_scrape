@@ -5,7 +5,17 @@ var gptLetterText;
 var gptIntentText;
 
 function init() {
-    document.querySelectorAll('.post').forEach(el => el.addEventListener('click', handlePostClick));
+    document.querySelectorAll('.post').forEach(el => {
+        // open post
+        el.addEventListener('click', handlePostClick);
+        
+        // if post is not null, highlight other posts with same id
+        // when headline is clicked
+        let headlineElement = el.querySelector('.post__headline');
+        if(headlineElement) {
+            headlineElement.addEventListener('click', handleHeadlineClick)
+        }
+    });
     document.querySelectorAll('.getSSText').forEach(el => el.addEventListener('click',getSSText));
     document.querySelectorAll('.getGPTText').forEach(el => el.addEventListener('click',getGPTText));
     document.querySelectorAll('.getGPTRes').forEach(el => el.addEventListener('click',getGPTResText));
@@ -31,12 +41,35 @@ function handlePostClick(evt) {
     if(el.dataset.visible === 'true') {
         return;
     }
-
+    
     el.classList.add('viewed')
     el.querySelector('.post__description').classList.add('show');
     el.querySelector('a').classList.add('show');
     el.querySelector('.close').classList.add('close-show');
     el.dataset.visible = 'true';
+}
+
+function handleHeadlineClick(evt) {
+    let el;
+
+    if (!evt.target.classList.contains("post")) {
+        el = evt.target.closest("div.post")
+    }
+    else {
+        el = evt.target;
+    }
+
+    if(el.dataset.visible === 'false') {
+        return;
+    }
+    
+    // find matching posts and add class
+    // to know it has been clicked
+    document.querySelectorAll('.post').forEach(post => {
+        if(post.dataset.id == el.dataset.id) {
+            post.classList.add('applied')
+        }
+    })
 }
 
 function hidePost(evt) {
