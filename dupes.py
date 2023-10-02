@@ -1,3 +1,17 @@
+"""
+compares current id with dictionary of ids.
+returns message string if found or empty string
+
+Parameters
+----------
+ids: dictionary
+id: string
+currentKey: string
+
+Returns
+-------
+string
+"""
 def findDupes(ids, id, currentKey):
   dupes = []
   s = ""
@@ -17,6 +31,20 @@ def findDupes(ids, id, currentKey):
   
   return s
 
+
+"""
+compares current company name with list of companies.
+returns message string if found or empty string
+
+Parameters
+----------
+companies: list
+companyName: string
+
+Returns
+-------
+string
+"""
 def findCompanyDupes(companies, companyName):
   s = ''
 

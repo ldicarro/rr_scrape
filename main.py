@@ -15,10 +15,13 @@ from TextUtil import TextUtil
 
 # set up options passed in from the command line
 argList = sys.argv[1:]
-options = "ht:"
-long_options = ["help","timedelta"]
+options = "hkt:"
+long_options = ["help","timedelta=","no_html","no_push","keep_json"]
 
-timedelta = 24 # default filter for how far back to search
+timedelta = 24      # default filter for how far back to search
+doHTML = True       # default to create html document
+doPush = True       # default to sync docs to server
+doEraseJSON = True  # default to reset data.json file
 
 try:
   args,vals = getopt.getopt(argList,options,long_options)
@@ -32,16 +35,43 @@ try:
       print("Options:")
       print("-h --help        display this dialog and quit")
       print("-t --timedelta   number of hours to filter back to, default is 24")
+      print("-k --keep_json   do not clear json file")
+      print("   --no_html     do not create new html file")
+      print("   --no_push     do not push files to server")
       sys.exit()
 
     # set timedelta to passed in option
     elif currentArg in ("-t", "--timedelta"):
       timedelta = int(currentVal)
+
+    # do not create an html doc and do not push to server
+    elif currentArg in("--no_html"):
+      doHTML = False
+      doPush = False
+
+    # do not push to server
+    elif currentArg in("--no_push"):
+      doPush = False
+
+    # do not clear data.json
+    elif currentArg in ("-k","--keep_json"):
+      doEraseJSON = False
 except getopt.error as err:
   # dump error to console
   print(str(err))
 
 
+"""
+create list of job ids for cross reference
+
+Parameters
+----------
+data: object (json)
+
+Returns
+-------
+dictionary
+"""
 def getJobIDs(data):
   ids = {}
 
@@ -54,7 +84,6 @@ def getJobIDs(data):
     for job in item:
       #append the id to the list
       ids[key].append(job['id'])
-
   return ids
 
 
@@ -190,11 +219,15 @@ if __name__ == "__main__":
   companies = files.getCompaniesData()
 
   htmlString = processDocument(data)
-  createHTMLDocument(htmlString)
+
+  if doHTML:
+    createHTMLDocument(htmlString)
   
   # push html to server
-  with open('./sync.sh') as f:
-    subprocess.call(f.read().split(" "))
+  if doPush:
+    with open('./sync.sh') as f:
+      subprocess.call(f.read().split(" "))
 
   # clearing the json file for next run
-  shutil.copyfile('data.template.json','data.json')
+  if doEraseJSON:
+    shutil.copyfile('data.template.json','data.json')
