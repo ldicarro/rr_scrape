@@ -1,16 +1,45 @@
 #!/usr/bin/env python
 
 from datetime import datetime
-import json
+import getopt
 import shutil
 import subprocess
 import shutil
+import sys
 
 import dupes
 import files
 
 from TimeUtil import TimeUtil
 from TextUtil import TextUtil
+
+# set up options passed in from the command line
+argList = sys.argv[1:]
+options = "ht:"
+long_options = ["help","timedelta"]
+
+timedelta = 24 # default filter for how far back to search
+
+try:
+  args,vals = getopt.getopt(argList,options,long_options)
+
+  for currentArg, currentVal in args:
+    # display help - print and quit
+    if currentArg in ("-h", "--help"):
+      print("Usage: ./main.py [OPTIONS]")
+      print("Consumes json and csv file and creates web page of job listings.")
+      print()
+      print("Options:")
+      print("-h --help        display this dialog and quit")
+      print("-t --timedelta   number of hours to filter back to, default is 24")
+      sys.exit()
+
+    # set timedelta to passed in option
+    elif currentArg in ("-t", "--timedelta"):
+      timedelta = int(currentVal)
+except getopt.error as err:
+  # dump error to console
+  print(str(err))
 
 
 def getJobIDs(data):
@@ -53,7 +82,7 @@ def processDocument(data):
     count = 0
     for post in title:
       timediff = TimeUtil().getHourDiff(post['created_at'])
-      if timediff < 24:
+      if timediff < timedelta:
 
         try:
           minSalary = ("$%" % post['salaryRange']['min'])
@@ -162,7 +191,6 @@ if __name__ == "__main__":
 
   htmlString = processDocument(data)
   createHTMLDocument(htmlString)
-  
   
   # push html to server
   with open('./sync.sh') as f:
