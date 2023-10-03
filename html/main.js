@@ -103,7 +103,7 @@ function getGPTText(evt) {
         "jobDescription": jd
     }
 
-    fetch("https://192.168.1.173:1993/gpt", {
+    fetch("https://192.168.0.130:1993/gpt", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
